@@ -45,7 +45,7 @@ long int sumEvenFibFaster() {
 	long int b = 1;
 	long int c = a + b;
 
-	while (c < 4000000) {
+	while (c <= 4000000) {
 		sum += c;
 		a = b + c;
 		b = c + a;
