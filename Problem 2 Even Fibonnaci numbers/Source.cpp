@@ -14,6 +14,7 @@ terms whose values do not exceed four million
 
 */
 
+//Big O of this function is O(n) because we iterate through a while loop
 long int sumEvenFibonnaci() {
 
 	//start at second term of fib sequence instead of first 
@@ -39,6 +40,9 @@ long int sumEvenFibonnaci() {
 //1, 1, (2), 3, 5, (8), 13, 21, (34)...
 
 //make new function that only counts every third number
+
+//Big O of this function is O(n) because we iterate through a while loop.
+//This function finishes slight faster as we don't have to test for evenness.
 long int sumEvenFibFaster() {
 	long int sum = 0;
 	long int a = 1;
