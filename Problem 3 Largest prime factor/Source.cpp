@@ -1,0 +1,62 @@
+#include <iostream>
+#include <vector>
+#include <math.h>
+#include <ctime>
+using namespace std;
+
+/*
+Author: Ben Loisch
+Date: 10/14/16
+Language: C++
+Description:
+This program finds the largest prime factor under 600851475143 using the Sieve of Erathosthenes algorithm.
+*/
+
+
+
+//Big O of this function is O(nlog(log(n)))
+//due to memory constraints if n is large, we will use the segmented sieve algorithm!
+//steps are as follows:
+
+//1. Divide the range 2 through n into segments of some size delta <= sqrt(n)
+//2. Find primes up to delta using sieve method
+//3. for each delta-sized block from sqrt(n) + 1 to n, set up a Boolean array of size delta.
+//Eliminate the multiples of each prime p <= sqrt(n) found in step 2.
+
+long long sievesLargestPrime(long long n) {
+	
+	//create boolean that holds 0's for composite and 1's for prime, all the way up to n-1 (numbers 2 to n)
+	vector<char> bIsPrime;
+	for (long long p = 0; p < n; p++) { bIsPrime.push_back(1); }
+
+	//find all multiples of i and set corresponding index in bIsPrime to 0
+	for (long long i = 2; i < (int)sqrt(n); i++) {
+		for (long long j = i; j < n; j += i) {
+			bIsPrime[j-2] = 0;
+		}
+	}
+
+	//check the prime nearest to the end of the bIsPrime array and return end which will be the prime number
+	for (long long end = n - 1; end >= 0; end--) {
+		if (bIsPrime[end])
+			return end;
+	}
+	
+	return 0;
+}
+
+int main() {
+
+	//create clock object to track program execution time
+	clock_t begin = clock();
+
+	printf("Largest prime number under 600851475143 is %lld\n", sievesLargestPrime(600851475143));
+
+	clock_t end = clock();
+	double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
+
+	cout << "Program execution time: " << elapsed_secs << endl;
+
+	system("PAUSE");
+	return 0;
+}
