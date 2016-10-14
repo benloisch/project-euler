@@ -15,6 +15,7 @@ This program finds the sum of all the multiples of 3 or 5 below 1000.
 
 #define TARGET 999
 
+//Big O of this function is O(1) because expression is evaluated at once. No iterations needed to find answer.
 int SumDivisibleBy(int n) {
 	/*
 	3 + 6 + 9... + 999 = 3 * (1 + 2 + 3...333)
@@ -36,6 +37,7 @@ int main() {
 	//create clock object to track program execution time
 	clock_t begin = clock();
 	 
+	//Big O of this function is O(n) because answer is found through iterating through a loop.
 	//find multiples of 3 or 5 below 1000 and sum them up
 	/*
 	int sum = 0;
