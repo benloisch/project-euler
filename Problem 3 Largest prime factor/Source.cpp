@@ -24,7 +24,43 @@ This program finds the largest prime factor under 600851475143 using the Sieve o
 //Eliminate the multiples of each prime p <= sqrt(n) found in step 2.
 
 long long sievesLargestPrime(long long n) {
-	
+
+	vector<long long> primes;
+	int segmentSize = (int)sqrt(n);
+
+	//generate primes up to sqrt(n)
+	//we only need to test numbers up to n against primes up to sqrt(n) for divisibility
+	char *initialPrimes = new char[segmentSize];
+	for (int b = 0; b < segmentSize; b++) { initialPrimes[b] = 1; }
+	for (long long g = 2; g < segmentSize; g++) {
+		//set all multiples of g to 0 (not prime)
+		for (int multiple = g; multiple < segmentSize; multiple += g) {
+			initialPrimes[multiple - g] = 0;
+		}
+	}
+
+	for (int a = 0; a < segmentSize; a++) {
+		if (initialPrimes[a] == 1)
+			primes.push_back(a + 2);
+	}
+
+	char *isPrime = new char[segmentSize];
+
+	//test each number in every segment for evenness
+	for (long long s = 2; s < n; s += segmentSize) {
+
+		//set array that keeps track of primes in segment to one meaning all numbers are prime until proven otherwise
+		for (int b = 0; b < segmentSize; b++) { isPrime[b] = 1; }
+
+		//for every segment, mark off multiples of primes and keep track of each marked off number using a true/false isPrime array
+		for (long long p = s; p < s + segmentSize; p++) {
+
+		}
+
+	}
+
+
+	/*
 	//create boolean that holds 0's for composite and 1's for prime, all the way up to n-1 (numbers 2 to n)
 	vector<char> bIsPrime;
 	for (long long p = 0; p < n; p++) { bIsPrime.push_back(1); }
@@ -32,7 +68,7 @@ long long sievesLargestPrime(long long n) {
 	//find all multiples of i and set corresponding index in bIsPrime to 0
 	for (long long i = 2; i < (int)sqrt(n); i++) {
 		for (long long j = i; j < n; j += i) {
-			bIsPrime[j-2] = 0;
+			bIsPrime[j - 2] = 0;
 		}
 	}
 
@@ -41,7 +77,11 @@ long long sievesLargestPrime(long long n) {
 		if (bIsPrime[end])
 			return end;
 	}
-	
+	*/
+
+	delete initialPrimes;
+	delete isPrime;
+
 	return 0;
 }
 
@@ -55,7 +95,7 @@ int main() {
 	clock_t end = clock();
 	double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
 
-	cout << "Program execution time: " << elapsed_secs << endl;
+	cout << "Program execution time: " << elapsed_secs << " seconds" << endl;
 
 	system("PAUSE");
 	return 0;
