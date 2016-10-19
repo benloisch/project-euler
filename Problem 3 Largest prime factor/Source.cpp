@@ -24,21 +24,43 @@ This program finds the largest prime factor under 600851475143 using the Sieve o
 //Eliminate the multiples of each prime p <= sqrt(n) found in step 2.
 
 long long sievesLargestPrime(long long n) {
-
-	vector<long long> primes;
+	
+	n = 100;
+	vector<int> primes;
 	int segmentSize = (int)sqrt(n);
 
 	//generate primes up to sqrt(n)
 	//we only need to test numbers up to n against primes up to sqrt(n) for divisibility
-	char *initialPrimes = new char[segmentSize];
-	for (int b = 0; b < segmentSize; b++) { initialPrimes[b] = 1; }
-	for (long long g = 2; g < segmentSize; g++) {
+	vector<char> initialPrimes(segmentSize);
+	for (int b = 0; b < segmentSize; b++) { 
+		initialPrimes[b] = 1; 
+	}
+	for (int g = 2; g < segmentSize; g++) {
 		//set all multiples of g to 0 (not prime)
-		for (int multiple = g; multiple < segmentSize; multiple += g) {
-			initialPrimes[multiple - g] = 0;
+		if (initialPrimes[g - 2] == 1) {
+			for (int multiple = g + g; multiple <= segmentSize; multiple += g) {
+				initialPrimes[multiple - g] = 0;
+			}
 		}
 	}
 
+	/*
+	int largestPrime = 0;
+	for (int back = initialPrimes.size() - 1; back > 0; back--) {
+		if (initialPrimes.at(back) == 1) {
+			largestPrime = back;
+			break;
+		}
+	}
+	*/
+
+	for (int i = 0; i < segmentSize; i++) {
+		if (initialPrimes[i] == 1)
+			primes.push_back(i+2);
+	}
+
+	int stop = 0;
+	/*
 	for (int a = 0; a < segmentSize; a++) {
 		if (initialPrimes[a] == 1)
 			primes.push_back(a + 2);
@@ -58,7 +80,7 @@ long long sievesLargestPrime(long long n) {
 		}
 
 	}
-
+	*/
 
 	/*
 	//create boolean that holds 0's for composite and 1's for prime, all the way up to n-1 (numbers 2 to n)
@@ -79,8 +101,8 @@ long long sievesLargestPrime(long long n) {
 	}
 	*/
 
-	delete initialPrimes;
-	delete isPrime;
+	//delete initialPrimes;
+	//delete isPrime;
 
 	return 0;
 }
