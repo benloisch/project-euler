@@ -41,9 +41,18 @@ long long largestPrime(long long n) {
 			primes.push_back(i);
 	}
 
+	for (int i = 0; i < primes.size(); i++) {
+		while (n % primes.at(i) == 0) {
+			n /= primes.at(i);
+			if (primes.at(i) > n)
+				return primes.at(i);
+		}
+	}
+
 	//now start at n - 1 and test each number below it against primes
 	//if it is not a multiple of any of the primes then it is prime
 
+	/*
 	for (long long a = n - 1; a > 2; a--) {
 		unsigned int i = 0;
 		for (; i < primes.size(); i++) {
@@ -55,6 +64,7 @@ long long largestPrime(long long n) {
 			return a;
 
 	}
+	*/
 
 	return 0;
 }
