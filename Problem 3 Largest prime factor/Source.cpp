@@ -6,7 +6,7 @@ using namespace std;
 
 /*
 Author: Ben Loisch
-Date: 10/19/16
+Date: 11/2/16
 Language: C++
 Description:
 This program finds the largest prime factor under 600851475143.
@@ -14,7 +14,7 @@ This program finds the largest prime factor under 600851475143.
 
 
 
-//Big O of this function is ?
+//Big O of this function is O(n^2)
 
 long long largestPrime(long long n) {
 
@@ -41,30 +41,15 @@ long long largestPrime(long long n) {
 			primes.push_back(i);
 	}
 
-	for (int i = 0; i < primes.size(); i++) {
+	//successively divided off the primes until we are left with the highest prime the number is divisible by
+	//thus, we are left with the greatest prime factor
+	for (unsigned int i = 0; i < primes.size(); i++) {
 		while (n % primes.at(i) == 0) {
 			n /= primes.at(i);
 			if (primes.at(i) > n)
 				return primes.at(i);
 		}
 	}
-
-	//now start at n - 1 and test each number below it against primes
-	//if it is not a multiple of any of the primes then it is prime
-
-	/*
-	for (long long a = n - 1; a > 2; a--) {
-		unsigned int i = 0;
-		for (; i < primes.size(); i++) {
-			if (a % primes.at(i) == 0)
-				break;
-		}
-
-		if (i >= primes.size())
-			return a;
-
-	}
-	*/
 
 	return 0;
 }
