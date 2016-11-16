@@ -43,8 +43,11 @@ int main() {
 			largestPalindrome = i;
 
 			//check if it is a product of two 3-digit numbers
-			for (int factor = 100; factor < int(sqrt(998001)); factor++) {
-				for (int factor2 = 100; factor2 < int(sqrt(998001)); factor2++) {
+			//start at sqrt(998001) and count downwards because this 
+			//increases our chance of finding a large palindrome quicker
+			for (int factor = int(sqrt(998001)) - 1; factor >= 100; factor--) {
+				//for P = a*b, a*b == b*a so only counter numbers where a <= b to exclude checking twice
+				for (int factor2 = int(sqrt(998001)) - 1; factor2 >= 100 && factor2 > factor; factor2--) {
 					if (factor * factor2 == i) {
 						largestPalindrome = i;
 						i = factor = factor2 = 0;
