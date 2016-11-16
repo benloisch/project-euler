@@ -7,11 +7,13 @@ using namespace std;
 
 /*
 Author: Ben Loisch
-Date: 11/6/16
+Date: 11/16/16
 Language: C++
 Description:
 This program finds the largest palindrome made from the product of two 3-digit numbers.
 */
+
+//Big O of this program is O(n^3)
 
 string intToString(int number) {
 	return to_string(number);
@@ -21,7 +23,7 @@ bool checkPalindrome(string numberAsString) {
 	for (unsigned int i = 0; i < numberAsString.size() / 2; i++)
 		if (numberAsString[i] != numberAsString[numberAsString.size() - i - 1])
 			return false;
-	
+
 	//if reached halfway mark then number is palindrome
 	return true;
 }
@@ -42,7 +44,13 @@ int main() {
 
 			//check if it is a product of two 3-digit numbers
 			for (int factor = 100; factor < int(sqrt(998001)); factor++) {
-				
+				for (int factor2 = 100; factor2 < int(sqrt(998001)); factor2++) {
+					if (factor * factor2 == i) {
+						largestPalindrome = i;
+						i = factor = factor2 = 0;
+						break;
+					}
+				}
 			}
 		}
 	}
