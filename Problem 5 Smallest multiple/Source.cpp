@@ -7,25 +7,27 @@ using namespace std;
 
 /*
 Author: Ben Loisch
-Date: 11/18/16
+Date: 11/19/16
 Language: C++
 Description:
-This program finds...
+This program finds the smallest number that is evenly divisble by integers 1 through n
 */
 
 int smallestMultiple(int n) {
-	int smallestMultiple = 2;
+	int number = 2;
 	while (true) {
+		//check if number is divisible by integers 1 through n
 		int i = 1;
 		for (; i <= n; i++) {
-			if (smallestMultiple % i != 0) {
-				smallestMultiple++;
+			if (number % i != 0) {
+				number++;
 				break;
 			}
 		}
 
+		//if divisible evenly by integers 1 through n
 		if (i > n)
-			return smallestMultiple;
+			return number;
 	}
 }
 
@@ -36,7 +38,7 @@ int main() {
 
 	int n = 20;
 
-	cout << "Smallest number divisible by all numbers from 1 to " << n << " is: " << smallestMultiple(n) << endl;
+	cout << "Smallest number divisible by all integers from 1 to " << n << " is: " << smallestMultiple(n) << endl;
 
 	clock_t end = clock();
 	double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
