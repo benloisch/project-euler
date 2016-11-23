@@ -19,12 +19,16 @@ e.g. if n = 10, 1^2 + 2^2 + ... + 10^2 = 385
 */
 
 //time complexity is O(n)
+//time complexity is O(1) if using improved method
 long unsigned int sumSquareDifference(unsigned int n) {
 
-	long unsigned int sumOfSquares = 0;
-	for (unsigned int i = 1; i <= n; i++)
-		sumOfSquares += i*i;
+	//brute force method of sumOfSquares
+	//long unsigned int sumOfSquares = 0;
+	//for (unsigned int i = 1; i <= n; i++)
+		//sumOfSquares += i*i;
 
+	//improved method of sumOfSquares
+	long unsigned int sumOfSquares = n * (n + 1) * ((2 * n) + 1) / 6;
 	long unsigned int squareOfSum = n * (n + 1) * n * (n + 1) / 4; // equal to the sum of 1 to n, squared = (n(n+1)/2)^2
 
 	return squareOfSum - sumOfSquares;
@@ -34,8 +38,6 @@ int main() {
 
 	//create clock object to track program execution time
 	clock_t begin = clock();
-
-	//brute force method
 	
 	unsigned int n = 100;
 
