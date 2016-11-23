@@ -7,10 +7,10 @@ using namespace std;
 
 /*
 Author: Ben Loisch
-Date: 11/19/16
+Date: 11/22/16
 Language: C++
 Description:
-This program finds the smallest number that is evenly divisble by integers 1 through n
+This program finds the smallest number that is evenly divisble by integers 1 through k
 */
 
 //brute force method
@@ -32,6 +32,33 @@ int smallestMultiple(int n) {
 	}
 }
 
+vector<int> allPrimesUnderNumber(int n) {
+	vector<int> primes;
+	int segmentSize = n;// (int)sqrt(n) + 1;
+
+	//generate primes up to sqrt(n)
+	vector<char> initialPrimes(segmentSize);
+	for (int b = 0; b < segmentSize; b++) {
+		initialPrimes[b] = 1;
+	}
+	initialPrimes[0] = initialPrimes[1] = 0;
+
+	for (int g = 0; g < segmentSize; g++) {
+		if (initialPrimes[g] == 1) {
+			for (int multiple = g + g; multiple < segmentSize; multiple += g) {
+				initialPrimes[multiple] = 0;
+			}
+		}
+	}
+
+	for (int i = 0; i < segmentSize; i++) {
+		if (initialPrimes[i] == 1)
+			primes.push_back(i);
+	}
+
+	return primes;
+}
+
 int main() {
 
 	//create clock object to track program execution time
@@ -41,35 +68,30 @@ int main() {
 	//int n = 20;
 	//cout << "Smallest number divisible by all integers from 1 to " << n << " is: " << smallestMultiple(n) << endl;
 
-	//fast O(n) method
+	//fast O(n) method (O(n^2) if you consider primes must also be calculated)
 	//N = number divisible by numbers 1 through k
 	//N = 2^a * 3^b * 5^c * ..... (prime number under k)^z
 	//where 2^a < k && 3^b < k && ... (prime number under k)^z < K
 	//a = floor(log(k) / log(2)), b = floor(log(k) / log(3)), c = floor(log(k) / log5)), etc.
 
 	int k = 20;
-	vector<int> primes; //holds primes (2, 3, 5, 7, 11, ... n while n < k)
-	primes.push_back(2);
-	primes.push_back(3);
-	primes.push_back(5);
-	primes.push_back(7);
-	primes.push_back(11);
-	primes.push_back(13);
-	primes.push_back(17);
-	primes.push_back(19);
+	vector<int> primes = allPrimesUnderNumber(k); //holds primes (2, 3, 5, 7, 11, ... n while n < k)
+
 	int N = 1;
 	int currPrime = 2;
-	int i = 0;
+	unsigned int i = 0;
 	while (true) {
 		if (i < primes.size()) {
-			int a = floor(log(k) / log(primes[i]));
-			N *= pow(primes[i], a);
+			int a = int(floor(log(k) / log(primes[i])));
+			N *= int(pow(primes[i], a));
 			i++;
 		}
 		else {
 			break;
 		}
 	}
+
+	cout << "Smallest number that is evenly divisible by integers 1 through " << k << " is " << N << endl;
 
 	clock_t end = clock();
 	double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
